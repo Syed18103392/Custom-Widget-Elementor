@@ -1,0 +1,23 @@
+{
+  "name": "custom-widget",
+  "version": "1.0.0",
+  "description": "A test elementor plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Syed",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.6.1",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-contrib-compass": "^1.1.1",
+    "grunt-contrib-compress": "^2.0.0",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^5.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-watcher": "^1.0.0",
+    "grunt-wp-i18n": "^1.0.3"
+  }
+}

@@ -65,7 +65,6 @@ final class MY_Elementor_Widget
         define('MYEW_PLUGIN_URL', trailingslashit(plugins_url('/', __FILE__)));
         define('MYEW_PLUGIN_PATH', trailingslashit(plugin_dir_path(__FILE__)));
     }
-
     /**
      * Load Scripts & Styles
      * @since 1.0.0
@@ -94,6 +93,24 @@ final class MY_Elementor_Widget
      */
     public function init()
     {
+        /** 
+         * Check the elementor activated or not 
+         * Show the notice
+         *   
+         * */
+
+        if (!did_action('elementor/loaded')) {
+            add_action('admin_notices', [$this, 'admin_notice_for_elementor_missing']);
+        }
+
+        /** 
+         * Check the elementor version 
+         * Show the notice
+         *   
+         * */
+        // if (!version_compare(ELEMENTOR_VERSION, self::MINIMUM_ELEMENTOR_VERSION, '>=')) {
+        //     add_action('admin_notices', [$this, 'admin_notice_for_minimum_elementor_version']);
+        // }
 
         add_action('elementor/init', [$this, 'init_category']);
         add_action('elementor/widgets/widgets_registered', [$this, 'init_widgets']);
@@ -122,6 +139,34 @@ final class MY_Elementor_Widget
             1
         );
     }
+
+
+    // function for checking the elemenotor installed or not 
+    public function admin_notice_for_elementor_missing()
+    {
+        if (isset($_GET['activate'])) unset($_GET['activate']);
+        $message = sprintf(
+            esc_html__(' "%1$s" requires "%2$s" for being installed', 'my-elementor-widget'),
+            '<strong>' . __('My Elementor Plugin', 'my-elementor-widget') . '</strong>',
+            '<strong>' . __('Elementor', 'my-elementor-widget') . '</strong>'
+        );
+
+        printf('<div class="notice notice-warning is-dismissable"><p>%1$s</p></div>', $message);
+    }
+
+    public function admin_notice_for_minimum_elementor_version()
+    {
+        if (isset($_GET['activate'])) unset($_GET['activate']);
+        $message = sprintf(
+            esc_html__(' "%1$s" requires "%2$s" version "%3$s" or greater  for being installed', 'my-elementor-widget'),
+            '<strong>' . __('My Elementor Plugin', 'my-elementor-widget') . '</strong>',
+            '<strong>' . __('Elementor', 'my-elementor-widget') . '</strong>',
+            self::MINIMUM_ELEMENTOR_VERSION
+        );
+
+        printf('<div class="notice notice-warning is-dismissable"><p>%1$s</p></div>', $message);
+    }
 }
+
 
 MY_Elementor_Widget::instance();
